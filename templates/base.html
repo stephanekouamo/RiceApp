@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rice App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding-top: 1rem;
+            min-height: calc(100vh - 56px - 60px); /* Header and footer heights */
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 15px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #e2e6ea;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .navbar .form-inline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-select {
+            width: auto;
+            min-width: 120px;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<!--    <nav class="navbar navbar-dark bg-dark px-4 justify-content-between"> -->
+	<nav class="navbar px-4 justify-content-between" style="background-color: #005f73;">	
+		<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Rice App Logo" height="57" class="me-2">
+		<a class="navbar-brand text-white fw-bold" href="{{ url_for('home') }}" style="font-size: 2rem;">
+        Rice App</a>
+		<form class="form-inline d-flex align-items-center" role="search" action="{{ url_for('search_regions') }}" method="GET">
+			<input class="form-control me-2" type="search" name="keyword" placeholder="Search region..." aria-label="Search">
+			<button class="btn btn-outline-light" type="submit">Search</button>
+			<select class="form-select language-select ms-2">
+				<option>English</option>
+				<option>French</option>
+			</select>
+		</form>
+	</nav>
+	<!-- Main Layout -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="{{ url_for('upload') }}">Upload</a>
+            <a href="{{ url_for('summary') }}">Summary</a>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Signup</a>
+            {% endif %}
+        </aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <!-- Footer -->
+    <footer>
+        &copy; Georgian College Student 2025 |
+        Design by Group1 BDAT1004:
+        <br>
+        <em>Calvin Cyril Fernandes, Cynthia Chisom Okoro, Oluwabunmi Ajayi, Stephane Orozco Kouamo Ngongang, Tatenda Tafa</em>
+    </footer>
+
+</body>
+</html>

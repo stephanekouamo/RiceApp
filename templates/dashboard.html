@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>User Dashboard</h2>
+<p>Welcome, {{ session.email }}!</p>
+
+<h4>Your Uploads:</h4>
+<ul>
+  {% for fn in uploads %}
+    <li>{{ fn }}</li>
+  {% else %}
+    <li>No uploads yet.</li>
+  {% endfor %}
+</ul>
+
+<hr>
+
+<h4>Data Summary</h4>
+{{ summary_table | safe }}
+
+<h4>Null Values</h4>
+<table class="table table-sm table-bordered">
+  <tr><th>Column</th><th>Nulls</th></tr>
+  {% for key, value in nulls.items() %}
+  <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+  {% endfor %}
+</table>
+
+<hr>
+
+<div class="mt-4">
+  <h5>Export Options</h5>
+  <!-- Button for exporting full dataset as CSV -->
+  <a href="{{ url_for('export_data') }}" class="btn btn-outline-secondary">Download Full Dataset (CSV)</a>
+  
+  <!-- Button for exporting summary statistics as Excel -->
+  <a href="{{ url_for('export_summary') }}" class="btn btn-outline-info">Download Summary Stats (Excel)</a>
+</div>
+
+<hr>
+
+<a href="{{ url_for('search_filter') }}" class="btn btn-outline-primary">Filter/Search</a>
+<a href="{{ url_for('charts') }}" class="btn btn-outline-success">View Charts</a>
+
+{% endblock %}

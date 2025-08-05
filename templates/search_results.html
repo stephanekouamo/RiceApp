@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Search Results for "{{ keyword }}"</h2>
+    {% if results %}
+        <ul class="list-group">
+            {% for region in results %}
+                <li class="list-group-item">{{ region }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No regions found.</p>
+    {% endif %}
+{% endblock %}

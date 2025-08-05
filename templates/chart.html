@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Charts & Visuals</h2>
+<div class="row">
+  <div class="col-md-6 mb-3"><h5>Bar: Avg Yield by Region</h5><img src="{{ url_for('static', filename='charts/bar.png') }}" class="img-fluid"></div>
+  <div class="col-md-6 mb-3"><h5>Bar: Average Area by Region</h5><img src="{{ url_for('static', filename='chart/area.png') }}" class="img-fluid"></div>
+  <div class="col-md-6 mb-3"><h5>Bar: Cultivation condition vs Average Yield</h5><img src="{{ url_for('static', filename='chart/cultivation.png') }}" class="img-fluid"></div>
+  <div class="col-md-6 mb-3"><h5>Pie: Region Distribution</h5><img src="{{ url_for('static', filename='charts/pie.png') }}" class="img-fluid"></div>
+  <div class="col-md-6 mb-3"><h5>Histogram: Yield Distribution</h5><img src="{{ url_for('static', filename='charts/hist.png') }}" class="img-fluid"></div>
+  <div class="col-md-6 mb-3"><h5>Line: Yield Trend by Period</h5><img src="{{ url_for('static', filename='charts/line.png') }}" class="img-fluid"></div>
+  <div class="col-md-12 mb-3"><h5>Box Plot: Yield by Region</h5><img src="{{ url_for('static', filename='charts/box.png') }}" class="img-fluid"></div>
+  <div class="col-md-12"><h5>Heatmap: Correlation Matrix</h5><img src="{{ url_for('static', filename='charts/heatmap.png') }}" class="img-fluid"></div>
+</div>
+
+<h3 class="mt-4">Interactive Plotly Chart</h3>
+<!-- Scatter Plot -->
+<!-- Cultivation Condition by Region -->
+<div>
+    <h4>Cultivation Condition by Region</h4>
+    <div id="cultivation_condition_chart">
+      <div id="cultivation_condition"></div>
+	  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script>
+        var cultivation_condition_data = {{ graphJSON_cultivation_condition | safe }};
+        Plotly.newPlot('cultivation_condition', cultivation_condition_data.data, cultivation_condition_data.layout);
+      </script>
+    </div>
+</div>
+
+<div id="sowing-method" class="mb-5">
+  <h4>Sowing Method by Region</h4>
+  <div id="sowing-method-chart"></div>
+  <script>
+    Plotly.newPlot("sowing-method-chart", {{ graphJSON_sowing_method|safe }});
+  </script>
+</div>
+
+ <div id="variety-region" class="mb-5">
+  <h4>Variety Type by Region</h4>
+  <div id="variety-region-chart"></div>
+  <script>
+    Plotly.newPlot("variety-region-chart", {{ graphJSON_variety_region | safe }});
+  </script>
+</div>
+
+<div id="irrigation-type" class="mb-5">
+  <h4>Irrigation Type by Region</h4>
+  <div id="irrigation-type-chart"></div>
+  <script>
+    Plotly.newPlot("irrigation-type-chart", {{ graphJSON_irrigation_region|safe }});
+  </script>
+</div>
+
+ <!-- <div>
+    <h4>Area vs Yield</h4>
+    <div id="scatter_chart">
+      <div id="scatter"></div>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+      <script>
+        var scatter_data = {{ graphJSON_scatter | safe }};
+        Plotly.newPlot('scatter', scatter_data.data, scatter_data.layout);
+      </script>
+    </div>
+</div> -->
+
+<!-- Count of Cultivation Conditions -->
+ <!-- <div>
+    <h4>Count of Cultivation Conditions</h4>
+    <div id="count_chart">
+      <div id="count"></div>
+      <script>
+        var count_data = {{ graphJSON_count | safe }};
+        Plotly.newPlot('count', count_data.data, count_data.layout);
+      </script>
+    </div>
+</div> -->
+{% endblock %}
